@@ -24,11 +24,10 @@ export class EmployeeController {
     findByName(@Param('name') name: []) {
         return `Return list with chose name`
     }
-    // @Put(':id')
-    // update(@Param('id') id: string, @Body() updateEmpDto: UpdateEmpDto) {
-    //     return `Updates a #${id} employee`;
-    // }
-
+    @Delete(':id')
+    delete(@Param('id') id: string) {
+        return this.empService.deleteEmployee(id);
+    }   
     @Delete(':id')
     remove(@Param('id') id: string) {
         return `Removes a #${id} employee`;

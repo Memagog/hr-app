@@ -21,7 +21,7 @@ export class Employee {
   @CreateDateColumn()
   data: Date;
 
-  @ManyToOne(()=> Department, department => department.employee)
-   department: Department;
+  @ManyToOne(()=> Department, department => department.employee, { cascade: true, onDelete: "CASCADE" })
+  department: Department;
   
 }

@@ -14,9 +14,12 @@ export class Department {
   @Column()
   description: string;  
 
+  @Column({default: 0})
+  count: number;
+
   @CreateDateColumn()
   creatData: Date;
 
-  @OneToMany(() => Employee, employee => employee.department)
+  @OneToMany(() => Employee, employee => employee.department, )
   employee: Employee[];
 }

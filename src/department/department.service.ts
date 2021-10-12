@@ -19,13 +19,18 @@ export class DepartmentService {
     }
 
     async getAllDepartment() {
-        const departments = await this.depRepository.find();
+        const departments = await this.depRepository.find({ relations: ['employee'] });
         return departments;
     }
 
     async getDepartment(id: string){
-        const departments = await this.depRepository.findOne(id, { relations: ['employee'] });
-        return departments;
+        const department = await this.depRepository.findOne(id, { relations: ['employee'] });
+        return department;
+    }
+    async deleteDepartment(id: string) {
+        const department = await this.depRepository.findOne(id, {relations: ['employee']});
+        await this.depRepository.remove(department);
+        return `Delete department by ${id}`
     }
 
     async addEmployee(depId: string, empId: string) {   
@@ -33,6 +38,7 @@ export class DepartmentService {
         const emp = await this.empRepository.findOne({ where: { id: empId }});     
         const department = await this.depRepository.findOne(depId,{ relations: ['employee'] }).then((dep) => {
             dep.employee.unshift(emp);
+            dep.count = dep.employee.length
             return dep;
         });
         
@@ -52,6 +58,7 @@ export class DepartmentService {
             if ( index >= 0 ) {
               dep.employee.splice(index, 1);
             }
+            dep.count = dep.employee.length
             return dep;
         });
         

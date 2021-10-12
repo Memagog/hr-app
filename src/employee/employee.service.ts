@@ -20,5 +20,11 @@ export class EmployeeService {
     async getOne(_id: string): Promise<Employee> {
         const allEmployee = await this.empRepository.findOne(_id);
         return allEmployee;        
+    } 
+    
+    async deleteEmployee(id: string) {
+        const employee = await this.empRepository.findOne(id);
+        await this.empRepository.remove(employee);
+        return `Delete employee by ${id}`
     }
 }
