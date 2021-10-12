@@ -32,7 +32,7 @@ export class DepartmentService {
           
         const emp = await this.empRepository.findOne({ where: { id: empId }});     
         const department = await this.depRepository.findOne(depId,{ relations: ['employee'] }).then((dep) => {
-            dep.employee.push(emp);
+            dep.employee.unshift(emp);
             return dep;
         });
         

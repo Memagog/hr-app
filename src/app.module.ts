@@ -6,6 +6,7 @@ import { EmployeeModule } from './employee/employee.module';
 import { DepartmentModule } from './department/department.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Employee } from './employee/employee.entity';
+import { Department } from './department/department.entity';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { Employee } from './employee/employee.entity';
       synchronize: true,
       autoLoadEntities: true,
     }),
+    TypeOrmModule.forFeature([Department, Employee]),
     EmployeeModule, DepartmentModule
   ],
   controllers: [AppController],
