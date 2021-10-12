@@ -20,9 +20,9 @@ export class EmployeeController {
     findOne(@Param('id') id: string) {
         return this.empService.getOne(id);
     }
-    @Get(':name')
-    findByName(@Param('name') name: []) {
-        return `Return list with chose name`
+    @Get('filter/:name')
+    findByName(@Param('name') name: string) {
+        return this.empService.findByName(name);
     }
     @Delete(':id')
     delete(@Param('id') id: string) {

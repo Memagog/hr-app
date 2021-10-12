@@ -21,7 +21,15 @@ export class EmployeeService {
         const allEmployee = await this.empRepository.findOne(_id);
         return allEmployee;        
     } 
-    
+    async findByName(name: string) {
+        const employee = await this.empRepository.find({
+            where: [
+                { name: name },
+                { surname: name },
+            ],
+        })
+        return employee;
+    }
     async deleteEmployee(id: string) {
         const employee = await this.empRepository.findOne(id);
         await this.empRepository.remove(employee);
