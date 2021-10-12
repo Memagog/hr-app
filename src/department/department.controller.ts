@@ -1,38 +1,41 @@
-import { Body, Controller, Post, Get, Query, Param, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Post, Get, Query, Param, Put, Delete, UsePipes } from '@nestjs/common';
 import { DepartmentService } from './department.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
+import { ValidationPipe } from './../pipes/validation.pipes';
 
 
 @Controller('department')
-export class DepartmentController {
+export class DepartmentController {    
+  constructor(private departmentService: DepartmentService) {};
+
+  @UsePipes(ValidationPipe)
+  @Post()
+  create(@Body() createDepartmentDto: CreateDepartmentDto) {
+    return this.departmentService.createDepartment(createDepartmentDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.departmentService.getAllDepartment();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.departmentService.getDepartment(id);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.departmentService.deleteDepartment(id);
+  }
     
-    constructor(private departmentService: DepartmentService) {}
-    @Post()
-        create(@Body() createDepartmentDto: CreateDepartmentDto) {
-        return this.departmentService.createDepartment(createDepartmentDto);
-    }
+  @Put(':id/add/:employee')
+  addEmployee(@Param('id') depId: string, @Param('employee') empId: string) {
+    return this.departmentService.addEmployee(depId, empId);        
+  }
 
-    @Get()
-    findAll() {
-        return this.departmentService.getAllDepartment();
-    }
-
-    @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.departmentService.getDepartment(id);
-    }
-    @Delete(':id')
-    delete(@Param('id') id: string) {
-        return this.departmentService.deleteDepartment(id);
-    }
-    
-    @Put(':id/add/:employee')
-    addEmployee(@Param('id') depId: string, @Param('employee') empId: string) {
-        return this.departmentService.addEmployee(depId, empId);        
-    }
-
-    @Delete(':id/add/:employee')
-    removeEmployee(@Param('id') depId: string, @Param('employee') empId: string) {
-        return this.departmentService.removeEmployee(depId, empId);        
-    }
+  @Delete(':id/add/:employee')
+  removeEmployee(@Param('id') depId: string, @Param('employee') empId: string) {
+    return this.departmentService.removeEmployee(depId, empId);        
+  }
 }
