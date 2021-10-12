@@ -1,5 +1,5 @@
 import { Employee } from 'src/employee/employee.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 
 
@@ -13,6 +13,9 @@ export class Department {
 
   @Column()
   description: string;  
+
+  @CreateDateColumn()
+  creatData: Date;
 
   @OneToMany(() => Employee, employee => employee.department)
   employee: Employee[];

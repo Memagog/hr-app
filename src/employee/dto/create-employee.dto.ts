@@ -2,5 +2,6 @@ export class CreateEmployeeDto{
     name: string;
     surname: string;
     position: string;
-    salary: number;    
+    salary: number;
+    data: Date;    
 }
