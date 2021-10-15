@@ -4,6 +4,7 @@ import { Employee } from 'src/employee/employee.entity';
 import { Repository } from 'typeorm';
 import { Department } from './department.entity';
 import { CreateDepartmentDto } from './dto/create-department.dto';
+import { FindDepartmentDTO } from './dto/find-department.dto';
 
 
 @Injectable()
@@ -23,12 +24,12 @@ export class DepartmentService {
     return departments;
   }
 
-  async getDepartment(id: string){
+  async getDepartment(id: FindDepartmentDTO){
     const department = await this.depRepository.findOne(id, { relations: ['employee'] });
     return department;
   }
     
-  async deleteDepartment(id: string) {
+  async deleteDepartment(id: FindDepartmentDTO) {
     const department = await this.depRepository.findOne(id, { relations: ['employee'] });
     await this.depRepository.remove(department);
     return `Delete department by ${id}`

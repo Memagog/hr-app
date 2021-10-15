@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, UsePipes } from '@nestjs/co
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { EmployeeService } from './employee.service';
 import { ValidationPipe } from './../pipes/validation.pipes';
+import { FindEmployeeDTO } from './dto/find-employee.dto';
 
 @Controller('employee')
 export class EmployeeController {    
@@ -19,7 +20,7 @@ export class EmployeeController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: FindEmployeeDTO) {
     return this.empService.getOne(id);
   }
 
@@ -29,12 +30,7 @@ export class EmployeeController {
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: FindEmployeeDTO) {
     return this.empService.deleteEmployee(id);
-  }   
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return `Removes a #${id} employee`;
-  }
+  }    
 }

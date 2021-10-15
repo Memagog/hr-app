@@ -2,6 +2,7 @@ import { Body, Controller, Post, Get, Query, Param, Put, Delete, UsePipes } from
 import { DepartmentService } from './department.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { ValidationPipe } from './../pipes/validation.pipes';
+import { FindDepartmentDTO } from './dto/find-department.dto';
 
 
 @Controller('department')
@@ -20,12 +21,12 @@ export class DepartmentController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: FindDepartmentDTO) {
     return this.departmentService.getDepartment(id);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: FindDepartmentDTO) {
     return this.departmentService.deleteDepartment(id);
   }
     
@@ -34,7 +35,7 @@ export class DepartmentController {
     return this.departmentService.addEmployee(depId, empId);        
   }
 
-  @Delete(':id/add/:employee')
+  @Delete(':id/del/:employee')
   removeEmployee(@Param('id') depId: string, @Param('employee') empId: string) {
     return this.departmentService.removeEmployee(depId, empId);        
   }

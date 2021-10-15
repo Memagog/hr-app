@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateEmployeeDto } from "./dto/create-employee.dto";
+import { FindEmployeeDTO } from "./dto/find-employee.dto";
 import { Employee } from "./employee.entity";
 
 @Injectable()
@@ -17,8 +18,8 @@ export class EmployeeService {
     return await this.empRepository.find({ relations: ['department'] });        
   }
 
-  async getOne(_id: string): Promise<Employee> {
-    const allEmployee = await this.empRepository.findOne(_id);
+  async getOne(id: FindEmployeeDTO): Promise<Employee> {
+    const allEmployee = await this.empRepository.findOne(id);
     return allEmployee;        
   } 
 
@@ -32,7 +33,7 @@ export class EmployeeService {
     return employee;
   }
     
-  async deleteEmployee(id: string) {
+  async deleteEmployee(id: FindEmployeeDTO) {
     const employee = await this.empRepository.findOne(id);
     await this.empRepository.remove(employee);
     return `Delete employee by ${id}`
